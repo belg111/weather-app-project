@@ -1,0 +1,15 @@
+.app-bottom-container {
+  border-radius: 0 0 10px 10px;
+  padding: 10px;
+}
+
+.five-day-cards {
+  background: linear-gradient(to top, #2bbcbc 0%, #02385b 100%);
+  border: none;
+  color: white;
+}
+
+.five-day-icons {
+  margin: 0 auto;
+  max-width: 100px;
+}

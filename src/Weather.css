@@ -1,0 +1,8 @@
+.city-main {
+  padding: 10px 20px;
+  overflow-wrap: break-word;
+}
+
+#description::first-letter {
+  text-transform: capitalize;
+}
