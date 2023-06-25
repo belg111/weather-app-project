@@ -6,6 +6,7 @@ export default function Weather() {
   const [city, setCity] = useState("");
   const [loaded, setLoaded] = useState(false);
   const [weather, setWeather] = useState(null);
+  const [forecast, setForecast] = useState("");
   const currDate = new Date().toLocaleDateString();
   const currTime = new Date().toLocaleTimeString();
   //let WeatherData = {
@@ -30,32 +31,34 @@ export default function Weather() {
       imgUrl: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}.png`,
     });
   }
-  //function showForecast(response) {
-  //console.log(response.data);
-  //setLoaded(true);
-  //setForecast({
-  //  temperature: Math.round(response.data.main.temp),
-  // minTemperature: Math.round(response.data.main.temp_min),
-  // maxTemperature: Math.round(response.data.main.temp_max),
-  //  wind: response.data.wind.speed,
-  // humidity: response.data.main.humidity,
-  // description: response.data.weather[0].description,
-  // imgUrl: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}.png`,
-  //});
+  function showForecast(response) {
+    console.log(response.data);
+    //let todayForecast = response.data.daily;
+    setForecast({
+      minTemperature: Math.round(response.data.daily[0].temperature.minimum),
+      maxTemperature: Math.round(response.data.daily[0].temperature.maximum),
+      //  wind: response.data.wind.speed,
+      // humidity: response.data.main.humidity,
+      // description: response.data.weather[0].description,
+      // imgUrl: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}.png`,
+    });
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=15b6ba0523386a8a73b38b2440a74dea&units=metric`;
     //console.log(url);
     axios.get(url).then(showWeather);
+    fetchForecast();
+
+    function fetchForecast() {
+      let apiKey = "a4c0530a1o900180f030t11ff9bb416d";
+      let apiUrlEndpoint = "https://api.shecodes.io/weather/v1/forecast";
+      let apiURL = `${apiUrlEndpoint}?query=${city}&key=${apiKey}&units=metric`;
+      console.log(apiURL);
+      axios.get(apiURL).then(showForecast);
+    }
   }
-  //function fetchForecast(event) {
-  //event.preventDefault();
-  // let apiKey = "a4c0530a1o900180f030t11ff9bb416d";
-  // let apiUrlEndpoint = "https://api.shecodes.io/weather/v1/forecast";
-  // let apiURL = `${apiUrlEndpoint}?${city}&key=${apiKey}&units=metric`;
-  // axios.get(apiURL).then(showForecast);
-  //}
 
   function updateCity(event) {
     setCity(event.target.value);
@@ -137,14 +140,14 @@ export default function Weather() {
               <div className="col-6">
                 <h4>Min</h4>
                 <h2 className="display-2">
-                  <span id="todays-min">{weather.minTemperature}</span>
+                  <span id="todays-min">{forecast.minTemperature}</span>
                   <span id="todays-units-min">°C</span>
                 </h2>
               </div>
               <div className="col-6">
                 <h4>Max</h4>
                 <h2 className="display-2">
-                  <span id="todays-max">{weather.maxTemperature}</span>
+                  <span id="todays-max">{forecast.maxTemperature}</span>
                   <span id="todays-units-max">°C</span>
                 </h2>
               </div>
