@@ -73,7 +73,7 @@ export default function Weather() {
               <h4>What's The Weather Like In...</h4>
               <form onSubmit={handleSubmit}>
                 <input
-                  type="text"
+                  type="search"
                   className="form-control form-control-md mb-3"
                   placeholder="Search for a city or town name"
                   autoComplete="off"
