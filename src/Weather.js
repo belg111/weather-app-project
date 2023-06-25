@@ -226,7 +226,7 @@ export default function Weather() {
               <div className="col-6">
                 <h4>Min</h4>
                 <h2 className="display-2">
-                  <span id="todays-min">? 20</span>
+                  <span id="todays-min">? </span>
                   <span id="todays-units-min">°C</span>
                 </h2>
               </div>
