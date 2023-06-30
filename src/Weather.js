@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./Weather.css";
+import TargetDate from "./TargetDate.js";
 
 export default function Weather() {
   const [city, setCity] = useState("");
-  const [loaded, setLoaded] = useState(false);
-  const [weather, setWeather] = useState(null);
+  //const [loaded, setLoaded] = useState(false);
+  const [weather, setWeather] = useState({ loaded: false });
   const [forecast, setForecast] = useState("");
   const currDate = new Date().toLocaleDateString();
   const currTime = new Date().toLocaleTimeString();
@@ -22,13 +23,16 @@ export default function Weather() {
   function showWeather(response) {
     console.log(response.data);
     //setTemperature(Math.round(response.data.main.temp));
-    setLoaded(true);
+    //setLoaded(true);
     setWeather({
-      temperature: Math.round(response.data.main.temp),
+      loaded: true,
+      city: response.data.city,
+      temperature: Math.round(response.data.temperature.current),
+      date: new Date(response.data.time * 1000),
       wind: response.data.wind.speed,
-      humidity: response.data.main.humidity,
-      description: response.data.weather[0].description,
-      imgUrl: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}.png`,
+      humidity: response.data.temperature.humidity,
+      description: response.data.condition.description,
+      imgUrl: response.data.condition.icon_url,
     });
   }
   function showForecast(response) {
@@ -46,7 +50,8 @@ export default function Weather() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=15b6ba0523386a8a73b38b2440a74dea&units=metric`;
+    let key = "a4c0530a1o900180f030t11ff9bb416d";
+    let url = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${key}&units=metric`;
     //console.log(url);
     axios.get(url).then(showWeather);
     fetchForecast();
@@ -64,7 +69,7 @@ export default function Weather() {
     setCity(event.target.value);
   }
 
-  if (loaded) {
+  if (weather.loaded) {
     return (
       <div>
         <div className="container">
@@ -101,13 +106,9 @@ export default function Weather() {
                 {weather.temperature}
                 <span>°C</span>
               </h2>
-              <ul className="list-inline substats">
-                <li className="list-inline-item">
-                  Wind Speed: {weather.wind}km/hr
-                </li>
-                <li className="list-inline-item">
-                  Humidity {weather.humidity}%
-                </li>
+              <ul className="list-unstyled substats">
+                <li>Wind Speed: {weather.wind}km/hr</li>
+                <li>Humidity: {weather.humidity}%</li>
               </ul>{" "}
             </div>
             <div className="col-5 col-md-3">
@@ -122,14 +123,11 @@ export default function Weather() {
         <div className="row mt-3">
           <div className="col-12 col-md-6 city-main">
             <h4>Displaying weather for:</h4>
-            <h2 className="display-2">{city}</h2>
+            <h2 className="display-2">{weather.city}</h2>
             <div className="row mb-3">
               <div className="col">
                 <h6 className="date">
-                  Last updated:
-                  <span>
-                    {currDate} {currTime}
-                  </span>
+                  <TargetDate date={weather.date} />
                 </h6>
               </div>
             </div>
