@@ -98,7 +98,7 @@ export default function Weather(props) {
     citySearch();
     return (
       <div className="container">
-        <div className="row justify-content-center">
+        <div className="row justify-content-left">
           <div className="col-12 col-md-6">
             <h4>Loading... Please Wait</h4>
           </div>
