@@ -5,7 +5,7 @@ import CurrentTemperature from "./CurrentTemperature";
 export default function WeatherInfo(props) {
   return (
     <span>
-      <div className="col-12 mt-2">
+      <div className="col-12 md-6 mt-2">
         <h2>Displaying Weather For</h2>
         <h2 className="display-1">{props.data.city}</h2>
         <div className="row mb-3">

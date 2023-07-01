@@ -63,7 +63,7 @@ export default function Weather(props) {
     return (
       <div className="container">
         <div className="row justify-content-center mb-1">
-          <div className="col-12 col-md-6">
+          <div className="col">
             <h4>What's The Weather Like In...</h4>
             <form onSubmit={handleSubmit}>
               <input
@@ -90,7 +90,7 @@ export default function Weather(props) {
             </form>
           </div>
           <WeatherInfo data={weather} info={forecast} />
-          <FiveDayForecast />
+          {/* <FiveDayForecast /> */}
         </div>
       </div>
     );
