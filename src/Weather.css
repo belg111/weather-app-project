@@ -6,3 +6,8 @@
 #description::first-letter {
   text-transform: capitalize;
 }
+
+.CurrentTemperature .unit {
+  font-weight: bold;
+  text-decoration: none;
+}

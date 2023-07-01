@@ -10,7 +10,7 @@ export default function Weather(props) {
   const [forecast, setForecast] = useState("");
 
   function showWeather(response) {
-    console.log(response.data);
+    // console.log(response.data);
     setWeather({
       loaded: true,
       city: response.data.city,
@@ -23,7 +23,7 @@ export default function Weather(props) {
     });
   }
   function showForecast(response) {
-    console.log(response.data);
+    //console.log(response.data);
     //let todayForecast = response.data.daily;
     setForecast({
       minTemperature: Math.round(response.data.daily[0].temperature.minimum),
@@ -62,7 +62,7 @@ export default function Weather(props) {
   if (weather.loaded) {
     return (
       <div className="container">
-        <div className="row justify-content-center">
+        <div className="row justify-content-center mb-1">
           <div className="col-12 col-md-6">
             <h4>What's The Weather Like In...</h4>
             <form onSubmit={handleSubmit}>
@@ -100,7 +100,7 @@ export default function Weather(props) {
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-12 col-md-6">
-            <h4>Loading...</h4>
+            <h4>Loading... Please Wait</h4>
           </div>
         </div>
       </div>

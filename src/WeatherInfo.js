@@ -1,10 +1,11 @@
 import React from "react";
 import TargetDate from "./TargetDate";
+import CurrentTemperature from "./CurrentTemperature";
 
 export default function WeatherInfo(props) {
   return (
     <span>
-      <div className="col-12">
+      <div className="col-12 mt-2">
         <h2>Displaying Weather For</h2>
         <h2 className="display-1">{props.data.city}</h2>
         <div className="row mb-3">
@@ -17,22 +18,19 @@ export default function WeatherInfo(props) {
       </div>
 
       <div className="row mt-3">
-        <div className="col-12 col-md-3">
+        <div className="col-6 col-md-3">
           <h4>Currently:</h4>
-          <h2 className="display-2">
-            {props.data.temperature}
-            <span>°C</span>
-          </h2>
+          <CurrentTemperature celcius={props.data.temperature} />
           <ul className="list-unstyled substats">
             <li>Wind Speed: {props.data.wind}km/hr</li>
             <li>Humidity: {props.data.humidity}%</li>
           </ul>{" "}
         </div>
-        <div className="col-12 col-md-3">
+        <div className="col-6 col-md-3">
           <img
             src={props.data.imgUrl}
             alt="{props.data.description}"
-            className="d-flex mx-auto"
+            className="d-flex"
           />
         </div>
         <div className="col-12 col-md-6">
