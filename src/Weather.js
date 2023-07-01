@@ -1,29 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./Weather.css";
-import TargetDate from "./TargetDate.js";
+import WeatherInfo from "./WeatherInfo";
+import FiveDayForecast from "./FiveDayForecast";
 
-export default function Weather() {
-  const [city, setCity] = useState("");
-  //const [loaded, setLoaded] = useState(false);
+export default function Weather(props) {
+  const [city, setCity] = useState(props.defaultCity);
   const [weather, setWeather] = useState({ loaded: false });
   const [forecast, setForecast] = useState("");
-  const currDate = new Date().toLocaleDateString();
-  const currTime = new Date().toLocaleTimeString();
-  //let WeatherData = {
-  // date: "Sun 21 May 2023 15:14 GMT",
-  // description: "Mostly sunny",
-  // imgUrl:
-  //   "http://shecodes-assets.s3.amazonaws.com/api/weather/icons/clear-sky-day.png",
-  // currentTemperature: 32,
-  // wind: 10,
-  // humidity: 47,
-  // };
 
   function showWeather(response) {
     console.log(response.data);
-    //setTemperature(Math.round(response.data.main.temp));
-    //setLoaded(true);
     setWeather({
       loaded: true,
       city: response.data.city,
@@ -48,21 +35,24 @@ export default function Weather() {
     });
   }
 
-  function handleSubmit(event) {
-    event.preventDefault();
+  function citySearch() {
     let key = "a4c0530a1o900180f030t11ff9bb416d";
     let url = `https://api.shecodes.io/weather/v1/current?query=${city}&key=${key}&units=metric`;
     //console.log(url);
     axios.get(url).then(showWeather);
     fetchForecast();
+  }
 
-    function fetchForecast() {
-      let apiKey = "a4c0530a1o900180f030t11ff9bb416d";
-      let apiUrlEndpoint = "https://api.shecodes.io/weather/v1/forecast";
-      let apiURL = `${apiUrlEndpoint}?query=${city}&key=${apiKey}&units=metric`;
-      console.log(apiURL);
-      axios.get(apiURL).then(showForecast);
-    }
+  function fetchForecast() {
+    let apiKey = "a4c0530a1o900180f030t11ff9bb416d";
+    let apiUrlEndpoint = "https://api.shecodes.io/weather/v1/forecast";
+    let apiURL = `${apiUrlEndpoint}?query=${city}&key=${apiKey}&units=metric`;
+    //console.log(apiURL);
+    axios.get(apiURL).then(showForecast);
+  }
+  function handleSubmit(event) {
+    event.preventDefault();
+    citySearch();
   }
 
   function updateCity(event) {
@@ -71,178 +61,46 @@ export default function Weather() {
 
   if (weather.loaded) {
     return (
-      <div>
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-12 col-md-6">
-              <h4>What's The Weather Like In...</h4>
-              <form onSubmit={handleSubmit}>
-                <input
-                  type="search"
-                  className="form-control form-control-md mb-3"
-                  placeholder="Search for a city or town name"
-                  autoComplete="off"
-                  onChange={updateCity}
-                />
-                <div className="d-grid gap-2 d-md-block">
-                  <button
-                    type="input"
-                    className="btn btn-primary form-control me-md-2 px-5 mb-3"
-                  >
-                    Search
-                  </button>
-                  <button
-                    type="input"
-                    className="btn btn-primary form-control me-md-2 px-5 mb-3"
-                  >
-                    My Current Location
-                  </button>
-                </div>
-              </form>
-            </div>
-            <div className="col-7 col-md-3">
-              <h2>Currently</h2>
-              <h2 className="display-1">
-                {weather.temperature}
-                <span>°C</span>
-              </h2>
-              <ul className="list-unstyled substats">
-                <li>Wind Speed: {weather.wind}km/hr</li>
-                <li>Humidity: {weather.humidity}%</li>
-              </ul>{" "}
-            </div>
-            <div className="col-5 col-md-3">
-              <img
-                src={weather.imgUrl}
-                alt="{weather.description}"
-                className="d-flex mx-auto"
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-12 col-md-6">
+            <h4>What's The Weather Like In...</h4>
+            <form onSubmit={handleSubmit}>
+              <input
+                type="search"
+                className="form-control form-control-md mb-3"
+                placeholder="Search for a city or town name"
+                autoComplete="off"
+                onChange={updateCity}
               />
-            </div>
+              <div className="d-grid gap-2 d-md-block">
+                <button
+                  type="input"
+                  className="btn btn-primary form-control me-md-2 px-5 mb-3"
+                >
+                  Search
+                </button>
+                <button
+                  type="input"
+                  className="btn btn-primary form-control me-md-2 px-5 mb-3"
+                >
+                  My Current Location
+                </button>
+              </div>
+            </form>
           </div>
-        </div>
-        <div className="row mt-3">
-          <div className="col-12 col-md-6 city-main">
-            <h4>Displaying weather for:</h4>
-            <h2 className="display-2">{weather.city}</h2>
-            <div className="row mb-3">
-              <div className="col">
-                <h6 className="date">
-                  <TargetDate date={weather.date} />
-                </h6>
-              </div>
-            </div>
-          </div>
-          <div className="col-12 col-md-6 city-main">
-            <h4>Today's Forecast</h4>
-            <div className="row">
-              <div className="col-6">
-                <h4>Min</h4>
-                <h2 className="display-2">
-                  <span id="todays-min">{forecast.minTemperature}</span>
-                  <span id="todays-units-min">°C</span>
-                </h2>
-              </div>
-              <div className="col-6">
-                <h4>Max</h4>
-                <h2 className="display-2">
-                  <span id="todays-max">{forecast.maxTemperature}</span>
-                  <span id="todays-units-max">°C</span>
-                </h2>
-              </div>
-              <div className="row">
-                <div className="col">
-                  <p id="description">{weather.description}</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <WeatherInfo data={weather} info={forecast} />
+          <FiveDayForecast />
         </div>
       </div>
     );
   } else {
+    citySearch();
     return (
-      <div>
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-12 col-md-6">
-              <h4>What's The Weather Like In...</h4>
-              <form onSubmit={handleSubmit}>
-                <input
-                  type="text"
-                  className="form-control form-control-md mb-3"
-                  placeholder="Search for a city or town name"
-                  autoComplete="off"
-                  onChange={updateCity}
-                />
-                <div className="d-grid gap-2 d-md-block">
-                  <button
-                    type="input"
-                    className="btn btn-primary form-control me-md-2 px-5 mb-3"
-                  >
-                    Search
-                  </button>
-                  <button
-                    type="input"
-                    className="btn btn-primary form-control me-md-2 px-5 mb-3"
-                  >
-                    My Current Location
-                  </button>
-                </div>
-              </form>
-            </div>
-            <div className="col-7 col-md-3">
-              <h2>Currently</h2>
-              <h2 className="display-1">
-                -<span>°C</span>
-              </h2>
-              <ul className="list-inline substats">
-                <li className="list-inline-item">Wind Speed: - km/hr</li>
-                <li className="list-inline-item">Humidity -%</li>
-              </ul>{" "}
-            </div>
-            <div className="col-5 col-md-3">
-              <img src="" alt="" className="d-flex mx-auto" />
-            </div>
-          </div>
-        </div>
-        <div className="row mt-3">
-          <div className="col-12 col-md-6 city-main">
-            <h4>Displaying weather for:</h4>
-            <h2 className="display-2">Nowhere</h2>
-            <div className="row mb-3">
-              <div className="col">
-                <h6 className="date">
-                  Last updated:
-                  <span>-</span>
-                </h6>
-              </div>
-            </div>
-          </div>
-          <div className="col-12 col-md-6 city-main">
-            <h4>Today's Forecast</h4>
-            <div className="row">
-              <div className="col-6">
-                <h4>Min</h4>
-                <h2 className="display-2">
-                  <span id="todays-min">? </span>
-                  <span id="todays-units-min">°C</span>
-                </h2>
-              </div>
-              <div className="col-6">
-                <h4>Max</h4>
-                <h2 className="display-2">
-                  <span id="todays-max">?</span>
-                  <span id="todays-units-max">°C</span>
-                </h2>
-              </div>
-              <div className="row">
-                <div className="col">
-                  <p id="description">
-                    We'll update this when we know what you are looking for.
-                  </p>
-                </div>
-              </div>
-            </div>
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-12 col-md-6">
+            <h4>Loading...</h4>
           </div>
         </div>
       </div>
