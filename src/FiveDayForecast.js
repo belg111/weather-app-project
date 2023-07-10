@@ -20,30 +20,19 @@ export default function FiveDayForecast(props) {
   }
 
   return (
-    <div className="app-bottom-container">
-      <div className="row mb-2">
-        <div className="col">
-          <h3>Next 5 Days</h3>
-        </div>
+    <div className="card text-center five-day-cards">
+      <div className="card-body">
+        <h5>{dayName()}</h5>
       </div>
-      <div className="row g-2 justify-content-center">
-        <div className="col">
-          <div className="card text-center five-day-cards">
-            <div className="card-body">
-              <h5>{dayName()}</h5>
-            </div>
-            <img
-              src={props.info.condition.icon_url}
-              alt=""
-              className="card-img-center img-fluid five-day-icons"
-            />
-            <div className="card-body">
-              <h5>
-                {minTemp()}°C / <strong>{maxTemp()}°C</strong>
-              </h5>
-            </div>
-          </div>
-        </div>
+      <img
+        src={props.info.condition.icon_url}
+        alt=""
+        className="card-img-center img-fluid five-day-icons"
+      />
+      <div className="card-body">
+        <h5>
+          {minTemp()}°C / <strong>{maxTemp()}°C</strong>
+        </h5>
       </div>
     </div>
   );

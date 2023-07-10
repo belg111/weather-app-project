@@ -94,7 +94,24 @@ export default function Weather(props) {
             </form>
           </div>
           <WeatherInfo data={weather} info={todayForecast} />
-          <FiveDayForecast info={forecast[0]} />
+          <div className="app-bottom-container">
+            <div className="row mb-2">
+              <div className="col">
+                <h3>Next 5 Days</h3>
+              </div>
+            </div>
+            <div className="row g-2 justify-content-center">
+              {forecast.map(function (dailyForecast, index) {
+                if (index > 0 && index < 6) {
+                  return (
+                    <div className="col" key={index}>
+                      <FiveDayForecast info={dailyForecast} />
+                    </div>
+                  );
+                }
+              })}
+            </div>
+          </div>
         </div>
       </div>
     );
