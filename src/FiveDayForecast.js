@@ -1,8 +1,24 @@
 import React from "react";
-import StormImage from "./images/icons-storm-200px.png";
 import "./Fivedayforecast.css";
 
-export default function FiveDayForecast() {
+export default function FiveDayForecast(props) {
+  function dayName() {
+    let dayDate = new Date(props.info.time * 1000);
+    let dayName = dayDate.getDay();
+    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    return days[dayName];
+  }
+
+  function minTemp() {
+    let temperature = Math.round(props.info.temperature.minimum);
+    return `${temperature}`;
+  }
+
+  function maxTemp() {
+    let temperature = Math.round(props.info.temperature.maximum);
+    return `${temperature}`;
+  }
+
   return (
     <div className="app-bottom-container">
       <div className="row mb-2">
@@ -14,84 +30,16 @@ export default function FiveDayForecast() {
         <div className="col">
           <div className="card text-center five-day-cards">
             <div className="card-body">
-              <h5>Mon</h5>
+              <h5>{dayName()}</h5>
             </div>
             <img
-              src={StormImage}
+              src={props.info.condition.icon_url}
               alt=""
               className="card-img-center img-fluid five-day-icons"
             />
             <div className="card-body">
               <h5>
-                23°C / <strong>35°C</strong>
-              </h5>
-            </div>
-          </div>
-        </div>
-        <div className="col">
-          <div className="card text-center five-day-cards">
-            <div className="card-body">
-              <h5>Tue</h5>
-            </div>
-            <img
-              src={StormImage}
-              alt=""
-              className="card-img-center img-fluid five-day-icons"
-            />
-            <div className="card-body">
-              <h5>
-                23°C / <strong>35°C</strong>
-              </h5>
-            </div>
-          </div>
-        </div>
-        <div className="col">
-          <div className="card text-center five-day-cards">
-            <div className="card-body">
-              <h5>Wed</h5>
-            </div>
-            <img
-              src={StormImage}
-              alt=""
-              className="card-img-center img-fluid five-day-icons"
-            />
-            <div className="card-body">
-              <h5>
-                23°C / <strong>35°C</strong>
-              </h5>
-            </div>
-          </div>
-        </div>
-        <div className="col">
-          <div className="card text-center five-day-cards">
-            <div className="card-body">
-              <h5>Thu</h5>
-            </div>
-            <img
-              src={StormImage}
-              alt=""
-              className="card-img-center img-fluid five-day-icons"
-            />
-            <div className="card-body">
-              <h5>
-                23°C / <strong>35°C</strong>
-              </h5>
-            </div>
-          </div>
-        </div>
-        <div className="col">
-          <div className="card text-center five-day-cards">
-            <div className="card-body">
-              <h5>Fri</h5>
-            </div>
-            <img
-              src={StormImage}
-              alt=""
-              className="card-img-center img-fluid five-day-icons"
-            />
-            <div className="card-body">
-              <h5>
-                23°C / <strong>35°C</strong>
+                {minTemp()}°C / <strong>{maxTemp()}°C</strong>
               </h5>
             </div>
           </div>

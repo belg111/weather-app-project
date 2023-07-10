@@ -2,18 +2,20 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./Weather.css";
 import WeatherInfo from "./WeatherInfo";
-/* import FiveDayForecast from "./FiveDayForecast"; */
+import FiveDayForecast from "./FiveDayForecast";
 
 export default function Weather(props) {
   const [city, setCity] = useState(props.defaultCity);
   const [weather, setWeather] = useState({ loaded: false });
+  const [todayForecast, setTodayForecast] = useState("");
   const [forecast, setForecast] = useState("");
 
   function showWeather(response) {
-    // console.log(response.data);
+    console.log(response.data);
     setWeather({
       loaded: true,
       city: response.data.city,
+      coord: response.data.coordinates,
       temperature: Math.round(response.data.temperature.current),
       date: new Date(response.data.time * 1000),
       wind: response.data.wind.speed,
@@ -23,15 +25,17 @@ export default function Weather(props) {
     });
   }
   function showForecast(response) {
-    //console.log(response.data);
+    console.log(response.data);
+    setForecast(response.data.daily);
     //let todayForecast = response.data.daily;
-    setForecast({
+    setTodayForecast({
       minTemperature: Math.round(response.data.daily[0].temperature.minimum),
       maxTemperature: Math.round(response.data.daily[0].temperature.maximum),
+      //imgUrl: response.data.daily[0].condition.icon_url,
+      //date: new Date(response.data.daily[0].time * 1000),
       //  wind: response.data.wind.speed,
       // humidity: response.data.main.humidity,
       // description: response.data.weather[0].description,
-      // imgUrl: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}.png`,
     });
   }
 
@@ -89,8 +93,8 @@ export default function Weather(props) {
               </div>
             </form>
           </div>
-          <WeatherInfo data={weather} info={forecast} />
-          {/* <FiveDayForecast /> */}
+          <WeatherInfo data={weather} info={todayForecast} />
+          <FiveDayForecast info={forecast[0]} />
         </div>
       </div>
     );

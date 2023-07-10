@@ -23,7 +23,7 @@ export default function CurrentTemperature(props) {
         <span className="h5 fw-bold">
           {" "}
           °C |{" "}
-          <a href="/" onClick={showFahrenheit} class="text-decoration-none">
+          <a href="/" onClick={showFahrenheit} className="text-decoration-none">
             °F
           </a>
         </span>
@@ -35,7 +35,7 @@ export default function CurrentTemperature(props) {
         <span className="display-2">{Math.round(fahrenheitConversion())}</span>
         <span className="h5 fw-bold">
           {" "}
-          <a href="/" onClick={showCelcius} class="text-decoration-none">
+          <a href="/" onClick={showCelcius} className="text-decoration-none">
             °C
           </a>{" "}
           | °F
