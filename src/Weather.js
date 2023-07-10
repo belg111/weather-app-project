@@ -84,12 +84,6 @@ export default function Weather(props) {
                 >
                   Search
                 </button>
-                <button
-                  type="input"
-                  className="btn btn-primary form-control me-md-2 px-5 mb-3"
-                >
-                  My Current Location
-                </button>
               </div>
             </form>
           </div>
