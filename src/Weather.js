@@ -66,7 +66,7 @@ export default function Weather(props) {
   if (weather.loaded) {
     return (
       <div className="container">
-        <div className="row justify-content-center mb-1">
+        <div className="row justify-content-center mb-1 px-1">
           <div className="col">
             <h4>What's The Weather Like In...</h4>
             <form onSubmit={handleSubmit}>
@@ -102,6 +102,8 @@ export default function Weather(props) {
                       <FiveDayForecast info={dailyForecast} />
                     </div>
                   );
+                } else {
+                  return null;
                 }
               })}
             </div>
