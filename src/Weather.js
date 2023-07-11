@@ -8,13 +8,14 @@ export default function Weather(props) {
   const [city, setCity] = useState(props.defaultCity);
   const [weather, setWeather] = useState({ loaded: false });
   const [todayForecast, setTodayForecast] = useState("");
-  const [forecast, setForecast] = useState("");
+  const [forecast, setForecast] = useState([]);
 
   function showWeather(response) {
-    console.log(response.data);
+    //console.log(response.data);
     setWeather({
       loaded: true,
       city: response.data.city,
+      country: response.data.country,
       coord: response.data.coordinates,
       temperature: Math.round(response.data.temperature.current),
       date: new Date(response.data.time * 1000),
@@ -25,7 +26,6 @@ export default function Weather(props) {
     });
   }
   function showForecast(response) {
-    console.log(response.data);
     setForecast(response.data.daily);
     //let todayForecast = response.data.daily;
     setTodayForecast({

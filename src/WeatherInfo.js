@@ -8,10 +8,15 @@ export default function WeatherInfo(props) {
       <div className="col-12 md-6 mt-2">
         <h2>Displaying Weather For</h2>
         <h2 className="display-1">{props.data.city}</h2>
+        <h5 className="h5">
+          <strong>{props.data.country}</strong>
+        </h5>
         <div className="row mb-3">
           <div className="col">
             <h6 className="date">
-              <TargetDate date={props.data.date} />
+              <em>
+                <TargetDate date={props.data.date} />
+              </em>
             </h6>
           </div>
         </div>
