@@ -12,31 +12,41 @@ export default function Weather(props) {
 
   function showWeather(response) {
     //console.log(response.data);
-    setWeather({
-      loaded: true,
-      city: response.data.city,
-      country: response.data.country,
-      coord: response.data.coordinates,
-      temperature: Math.round(response.data.temperature.current),
-      date: new Date(response.data.time * 1000),
-      wind: response.data.wind.speed,
-      humidity: response.data.temperature.humidity,
-      description: response.data.condition.description,
-      imgUrl: response.data.condition.icon_url,
-    });
+    if (response.data.status !== `not_found`) {
+      setWeather({
+        loaded: true,
+        city: response.data.city,
+        country: response.data.country,
+        coord: response.data.coordinates,
+        temperature: Math.round(response.data.temperature.current),
+        date: new Date(response.data.time * 1000),
+        wind: response.data.wind.speed,
+        humidity: response.data.temperature.humidity,
+        description: response.data.condition.description,
+        imgUrl: response.data.condition.icon_url,
+      });
+    } else {
+      return null;
+    }
   }
   function showForecast(response) {
-    setForecast(response.data.daily);
-    //let todayForecast = response.data.daily;
-    setTodayForecast({
-      minTemperature: Math.round(response.data.daily[0].temperature.minimum),
-      maxTemperature: Math.round(response.data.daily[0].temperature.maximum),
-      //imgUrl: response.data.daily[0].condition.icon_url,
-      //date: new Date(response.data.daily[0].time * 1000),
-      //  wind: response.data.wind.speed,
-      // humidity: response.data.main.humidity,
-      // description: response.data.weather[0].description,
-    });
+    if (response.data.status !== `not_found`) {
+      setForecast(response.data.daily);
+      //let todayForecast = response.data.daily;
+      setTodayForecast({
+        minTemperature: Math.round(response.data.daily[0].temperature.minimum),
+        maxTemperature: Math.round(response.data.daily[0].temperature.maximum),
+        //imgUrl: response.data.daily[0].condition.icon_url,
+        //date: new Date(response.data.daily[0].time * 1000),
+        //  wind: response.data.wind.speed,
+        // humidity: response.data.main.humidity,
+        // description: response.data.weather[0].description,
+      });
+    } else {
+      alert(
+        "Sorry , we couldn't find that location. Please check the location name and try again."
+      );
+    }
   }
 
   function citySearch() {
