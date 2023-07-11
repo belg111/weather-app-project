@@ -22,7 +22,7 @@ export default function WeatherInfo(props) {
         </div>
       </div>
 
-      <div className="row mt-3">
+      <div className="row my-3">
         <div className="col-6 col-md-3">
           <h4>Currently:</h4>
           <CurrentTemperature celcius={props.data.temperature} />
@@ -39,7 +39,9 @@ export default function WeatherInfo(props) {
           />
         </div>
         <div className="col-12 col-md-6">
-          <h4>Today's Forecast</h4>
+          <h4>
+            <strong>Today's Forecast</strong>
+          </h4>
           <div className="row">
             <div className="col-6 mx-auto">
               <h4>Min</h4>
